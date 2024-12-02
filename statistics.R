@@ -1,11 +1,9 @@
 # Statistics for "The impact of EEG preprocessing parameters on ultra-low-power seizure detection"
-# load packages --------------------------------------------------------------------
+# load packages
 if (!requireNamespace("pacman", quietly = TRUE)) {
-  install.packages("pacman")
-}
+  install.packages("pacman") }
 library("pacman")
 p_load("lmerTest", "emmeans", "effsize", update=FALSE)
-
 library("lmerTest")
 library("emmeans")
 library("effsize")
@@ -21,8 +19,7 @@ filenames <- c(
   "df_folds_avg_window_sizes_0_percent_overlap",
   "df_folds_avg_window_sizes_50_percent_overlap",
   "df_folds_avg_bit_width",
-  "df_folds_avg_n_channels"
-)
+  "df_folds_avg_n_channels")
 
 # define conditions and metrics
 conditions <- c("sampling_rate", "window_length", "bit_width", "n_channels")
@@ -36,7 +33,7 @@ ref_levels <- list(
   n_channels = c("4", "3", "2", "1") # reference: 4 channels
 )
 
-# function to load data & do LMM, posthoc-contrats and effect size calculation
+# function to load data & do LMM, posthoc-contrasts and effect size calculation
 do_stats <- function(filename, condition, metrics, ref_levels) {
   
   # load data
@@ -67,13 +64,13 @@ do_stats <- function(filename, condition, metrics, ref_levels) {
     model_summary <- summary(model)
     
     # post-hoc contrasts
-    emmeans_results <- emmeans(model, specs = condition) # Use `specs = condition` to reference the variable directly
+    emmeans_results <- emmeans(model, specs = condition)
     pairwise_results <- pairs(emmeans_results, adjust = "fdr") # Benjamini & Hochberg procedure
     
     # effect sizes (Cohen's d)
     cohens_d <- eff_size(emmeans_results, sigma = sigma(model), edf = Inf)
     
-    # Print results
+    # print results
     cat("\n----------------------- Results for", filename, metric, "-----------------------\n")
     cat("\nLMM:\n")
     print(model_summary$coefficients)

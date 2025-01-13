@@ -72,7 +72,7 @@ def plot_condition(df_folds_avg, metrics, condition):
 
                 # 256 vs 128
                 ax.axhline(y=105, xmin=0.18, xmax=0.5, color='black', linestyle="solid", linewidth=2)
-                ax.text(x=0.4, y=103, s="**")
+                ax.text(x=0.4, y=103, s="***")
                 
                 # 256 vs 64
                 ax.axhline(y=112, xmin=0.18, xmax=0.83, color='black', linestyle="solid", linewidth=2)
@@ -84,90 +84,86 @@ def plot_condition(df_folds_avg, metrics, condition):
                 ax.set_yticks(np.arange(0, 100+20, 20))
 
                 if any(df_plot["model_type"].str.contains("_0.5")) == True:
-                    ax.set_ylim(-2, 120)
+                    ax.set_ylim(-2, 140)
                     ax.set_yticks(np.arange(0, 100+20, 20))
                 
-                # 1 vs 8
+                # # 1 vs 8
                 ax.axhline(y=120, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
                 ax.text(x=1.4, y=118, s="***")
                 
-                # 1 vs 4
-                ax.axhline(y=110, xmin=0.12, xmax=0.6, color='black', linestyle="solid", linewidth=2)
+                # # 1 vs 4
+                ax.axhline(y=110, xmin=0.12, xmax=0.7, color='black', linestyle="solid", linewidth=2)
                 ax.text(x=0.9, y=108, s="**")
 
             elif condition == "window_length" and any(df_plot["model_type"].str.contains("_0.5")) == True:
                 
                 # 1 vs 8
                 ax.axhline(y=110, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
-                ax.text(x=1.4, y=108, s="***")
+                ax.text(x=1.4, y=108, s="**")
 
             elif condition == "n_channels":
                 ax.set_ylim(-2, 115)
 
                 # 4 vs 1
                 ax.axhline(y=112, xmin=0.18, xmax=0.83, color='black', linestyle="solid", linewidth=2)
-                ax.text(x=1.5, y=110, s="*")   
+                ax.text(x=1.5, y=110, s="***")
+
+
+            elif condition == "bit_width":
+                ax.set_ylim(-2, 115)
+
+                # 4 vs 1
+                ax.axhline(y=112, xmin=0.18, xmax=0.83, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=1.5, y=110, s="***")
 
             
         elif metric == "event_false_detections_per_hour":
-            ax.set_title("False detections per hour", pad=15)
-            ax.set_ylabel("False detections per hour")    
 
+            ax.set_title("False detections per hour", pad=15)
+            ax.set_ylabel("False detections per hour")
             
             # add significance bars for main effects
             if condition == "sampling_rate":
-                ax.set_ylim(-0.2, 14)
-                ax.set_yticks(np.arange(0, 12+2, 2))
+                ax.set_ylim(-0.2, 16)
+                ax.set_yticks(np.arange(0, 14+2, 2))
+
+                # 256 vs 64
+                ax.axhline(y=14.5, xmin=0.18, xmax=0.5, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=0.4, y=14.4, s="***")
+
+                # # 256 vs 128
+                ax.axhline(y=15.5, xmin=0.18, xmax=0.84, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=0.9, y=15.5, s="***")
+                
 
             if condition == "window_length":
 
-                if any(df_plot["model_type"].str.contains("_0.5")) == True:     
-                    ax.set_ylim(-0.2, 17)
-                    ax.set_yticks(np.arange(0, 14+2, 2))
+                ax.set_ylim(-0.2, 18)
+                ax.set_yticks(np.arange(0, 14+2, 2))
 
-                    # 1 vs 8
-                    ax.axhline(y=16.6, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
-                    ax.text(x=1.4, y=16.55, s="***")
-                    
-                    # # 1 vs 4
-                    ax.axhline(y=15.5, xmin=0.12, xmax=0.7, color='black', linestyle="solid", linewidth=2)
-                    ax.text(x=0.9, y=15.5, s="***")
-                    
-                    # 1 vs 2
-                    ax.axhline(y=14.5, xmin=0.12, xmax=0.4, color='black', linestyle="solid", linewidth=2)
-                    ax.text(x=0.4, y=14.4, s="***")
-
-                else:
-                    ax.set_ylim(-0.2, 16)
-                    ax.set_yticks(np.arange(0, 12+2, 2))                
-            
-                    # 1 vs 8
-                    ax.axhline(y=15.6, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
-                    ax.text(x=1.4, y=15.55, s="***")
-                    
-                    # # 1 vs 4
-                    ax.axhline(y=14.5, xmin=0.12, xmax=0.7, color='black', linestyle="solid", linewidth=2)
-                    ax.text(x=0.9, y=14.5, s="***")
-                    
-                    # 1 vs 2
-                    ax.axhline(y=13.5, xmin=0.12, xmax=0.4, color='black', linestyle="solid", linewidth=2)
-                    ax.text(x=0.4, y=13.4, s="***")
+                # 1 vs 8
+                ax.axhline(y=16.6, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=1.4, y=16.55, s="***")
                 
-            if condition == "bit_width":
-                ax.set_ylim(-0.2, 14)
-                ax.set_yticks(np.arange(0, 12+2, 2))
+                # # 1 vs 4
+                ax.axhline(y=15.5, xmin=0.12, xmax=0.7, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=0.9, y=15.5, s="***")
                 
-                # 16 vs 8 bit
-                ax.axhline(y=13.7, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
-                ax.text(x=1.7, y=13.55, s="**")     
+                # 1 vs 2
+                ax.axhline(y=14.5, xmin=0.12, xmax=0.4, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=0.4, y=14.4, s="***")                
 
             if condition == "n_channels":
-                ax.set_ylim(-0.2, 14)
-                ax.set_yticks(np.arange(0, 12+2, 2))        
+                ax.set_ylim(-0.2, 16)
+                ax.set_yticks(np.arange(0, 14+2, 2))
 
                 # 4 vs 2 channels
-                ax.axhline(y=13.7, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
-                ax.text(x=1.6, y=13.55, s="*")                          
+                ax.axhline(y=14.7, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=1.6, y=14.55, s="**")                       
+
+            if condition == "bit_width":
+                ax.set_ylim(-0.2, 16)
+                ax.set_yticks(np.arange(0, 14+2, 2))           
                 
         elif metric == "event_average_detection_delay":
             ax.set_title("Average detection delay", pad=15)
@@ -176,7 +172,7 @@ def plot_condition(df_folds_avg, metrics, condition):
             ax.set_yticks(np.arange(-30, 100+30, 30))
             
             if condition == "sampling_rate":
-                ax.set_ylim(-35, 130)
+                ax.set_ylim(-35, 120)
                 ax.set_yticks(np.arange(-30, 100+30, 30))
                 
             elif condition == "window_length":
@@ -198,7 +194,7 @@ def plot_condition(df_folds_avg, metrics, condition):
                     ax.text(x=0.4, y=98, s="***")
 
                 else:
-                    ax.set_ylim(-35, 190)
+                    ax.set_ylim(-35, 200)
                     ax.set_yticks(np.arange(-30, 100+60, 30))
 
                     # 1 vs 8
@@ -211,14 +207,7 @@ def plot_condition(df_folds_avg, metrics, condition):
                     
                     # 1 vs 2
                     ax.axhline(y=150, xmin=0.12, xmax=0.4, color='black', linestyle="solid", linewidth=2)
-                    ax.text(x=0.4, y=148, s="***")
-                
-            # add significance bars for main effects
-            if condition == "sampling_rate":
-                
-                # 256 vs 64
-                ax.axhline(y=123, xmin=0.18, xmax=0.83, color='black', linestyle="solid", linewidth=2)
-                ax.text(x=1, y=121, s="*")
+                    ax.text(x=0.4, y=148, s="**")
                     
     # plot energy consumption
     df_energy = pd.read_excel("./data/energy_measurements.xlsx") # get energy consumption data

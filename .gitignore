@@ -54,3 +54,5 @@ sample_data/
 
 *.png
 *.svg
+.Rhistory
+.RData

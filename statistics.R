@@ -3,7 +3,7 @@
 if (!requireNamespace("pacman", quietly = TRUE)) {
   install.packages("pacman") }
 library("pacman")
-p_load("lmerTest", "emmeans", "effsize", update=FALSE)
+p_load("lmerTest", "emmeans", "effsize", "performance", update=FALSE)
 library("lmerTest")
 library("emmeans")
 library("effsize")
@@ -63,6 +63,9 @@ do_stats <- function(filename, condition, metrics, ref_levels) {
     model <- lmer(model_formula, data = df_folds_avg)
     model_summary <- summary(model)
     
+    # conditional and marginal R squared
+    r_squared <- r2(model)
+    
     # post-hoc contrasts
     emmeans_results <- emmeans(model, specs = condition)
     pairwise_results <- pairs(emmeans_results, adjust = "fdr") # Benjamini & Hochberg procedure
@@ -73,7 +76,9 @@ do_stats <- function(filename, condition, metrics, ref_levels) {
     # print results
     cat("\n----------------------- Results for", filename, metric, "-----------------------\n")
     cat("\nLMM:\n")
-    print(model_summary$coefficients)
+    print(model_summary)
+    cat("\nR squared:\n")
+    print(r_squared)
     cat("\nPost-hoc-contrasts:\n")
     print(pairwise_results)
     cat("\nEffect sizes (Cohen's d):\n")

@@ -80,16 +80,15 @@ def plot_condition(df_folds_avg, metrics, condition, save=False):
                 
             elif condition == "window_length" and any(df_plot["model_type"].str.contains("_0.5")) == False:
                 
-                ax.set_ylim(-2, 130)
-                ax.set_yticks(np.arange(0, 100+20, 20))
+                ax.set_ylim(-2, 115)
 
                 if any(df_plot["model_type"].str.contains("_0.5")) == True:
                     ax.set_ylim(-2, 140)
                     ax.set_yticks(np.arange(0, 100+20, 20))
                 
                 # 1 vs 8
-                ax.axhline(y=120, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
-                ax.text(x=1.4, y=118, s="*")
+                ax.axhline(y=105, xmin=0.12, xmax=0.9, color='black', linestyle="solid", linewidth=2)
+                ax.text(x=1.4, y=103, s="*")
 
             elif condition == "window_length" and any(df_plot["model_type"].str.contains("_0.5")) == True:
 
